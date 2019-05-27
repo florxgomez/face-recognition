@@ -17,8 +17,14 @@ class App extends React.Component {
 		super();
 		this.state = {
 			input: '',
-			imageURL: ''
+			imageURL: '',
+			celebrityName: '',
+			box: {}
 		}
+	}
+
+	calculateFaceLocation = (data) => {
+
 	}
 
 	onInputChange = (event) => {
@@ -30,16 +36,20 @@ class App extends React.Component {
 		app.models.predict(
 			'e466caa0619f444ab97497640cefc4dc', 
 			this.state.input)
-		.then(
-		    function(response) {
-		      console.log(response.outputs[0].data.regions[0].data.face.identity.concepts[0].name,
-		      	response.outputs[0].data.regions[0].region_info.bounding_box);
-		    },
-		    function(err) {
-		      // there was an error
-		    }
-		  );
-	}
+		.then(response => { 
+			this.calculateFaceLocation(response);
+		    const resultCelebrityName = response.outputs[0].data.regions[0].data.face.identity.concepts[0].name;
+		    console.log(response.outputs[0].data.regions[0].region_info.bounding_box);
+		    this.setState({celebrityName : resultCelebrityName})
+		  },
+		  function(err){
+		  	console.log(err);
+		  }
+			 // there was an error
+			 );
+		}
+
+	
 
 	render(){
 		return (
@@ -76,7 +86,7 @@ class App extends React.Component {
 			<Navigation />
 			<Rank />
 			<ImageLinkForm onInputChange={this.onInputChange} onSubmit={this.onSubmit}/>
-		<FaceRecognition imageURL={this.state.imageURL} />
+		<FaceRecognition imageURL={this.state.imageURL} celebrityName={this.state.celebrityName} />
 		</div>
 		);
 	}
