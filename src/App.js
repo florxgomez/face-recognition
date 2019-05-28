@@ -5,7 +5,8 @@ import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm';
 import Rank from './components/Rank/Rank';
 import FaceRecognition from './components/FaceRecognition/FaceRecognition';
 import SignIn from './components/SignIn/SignIn';
-import tachyons from 'tachyons'
+import Register from './components/Register/Register';
+import tachyons from 'tachyons';
 import Particles from 'react-particles-js';
 import Clarifai from 'clarifai';
 
@@ -21,7 +22,8 @@ class App extends React.Component {
 			imageURL: '',
 			celebrityName: '',
 			box: {},
-			route: 'signIn'
+			route: 'signIn',
+			isSignedIn: false
 		}
 	}
 
@@ -39,7 +41,6 @@ class App extends React.Component {
 	}
 
 	displayFaceBox = (box) => {
-		console.log(box);
 		this.setState({box: box});
 	}
 
@@ -60,10 +61,16 @@ class App extends React.Component {
 	}
 
 	onRouteChange = (route) => {
+		if(route === 'signout') {
+			this.setState({isSignedIn: false})
+		} else if(route === 'home') {
+			this.setState({isSignedIn: true})
+		}
 		this.setState({route : route});
 	}
 
 	render(){
+		const { isSignedIn, imageURL, route, box } = this.state;
 		return (
 			<div className="App">
 			<Particles className='particles'
@@ -95,14 +102,21 @@ class App extends React.Component {
 				}
 			}}
 			/>
-		{ this.state.route === 'signIn' 
-		? <SignIn onRouteChange={this.onRouteChange} />
-			: <div>
-				<Navigation onRouteChange={this.onRouteChange}/>
+		{ route === 'home' 
+		? <div>
+				<Navigation isSignedIn={isSignedIn} onRouteChange={this.onRouteChange}/>
 				<Rank />
 				<ImageLinkForm onInputChange={this.onInputChange} onSubmit={this.onSubmit}/>
-				<FaceRecognition box={this.state.box} imageURL={this.state.imageURL} celebrityName={this.state.celebrityName} />
-			</div>
+				<FaceRecognition box={box} imageURL={imageURL} celebrityName={this.state.celebrityName} />
+			</div> 
+		: (
+			route === 'signIn'
+			? <div>	<Navigation isSignedIn={isSignedIn} onRouteChange={this.onRouteChange}/>
+				<SignIn onRouteChange={this.onRouteChange} /></div>
+			: <div><Navigation isSignedIn={isSignedIn} onRouteChange={this.onRouteChange}/>
+				<Register onRouteChange={this.onRouteChange} /></div>
+		)
+		
 		}
 		</div>
 		);
