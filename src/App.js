@@ -23,8 +23,27 @@ class App extends React.Component {
 			celebrityName: '',
 			box: {},
 			route: 'signIn',
-			isSignedIn: false
+			isSignedIn: false,
+			user: {
+				id: '',
+				name: '',
+				email: '',
+				entries: 0,
+				joined: ''
+				}
 		}
+	}
+
+	loadUser = (data) => {
+		this.setState({
+			user: {
+				id: data.id,
+				name: data.name,
+				email: data.email,
+				entries: data.entries,
+				joined: data.joined
+		}
+		})
 	}
 
 	calculateFaceLocation = (data) => {
@@ -48,12 +67,26 @@ class App extends React.Component {
 		this.setState({input: event.target.value})
 	}
 
-	onSubmit = () => {
+	onPictureSubmit = () => {
 		this.setState({imageURL: this.state.input})
-		app.models.predict(
+		app.models
+		.predict(
 			'e466caa0619f444ab97497640cefc4dc', 
 			this.state.input)
 		.then(response => { 
+			if(response){
+				fetch('http://localhost:3000/image', {
+					method: 'put',
+					headers: {'Content-Type': 'application/json'},
+					body: JSON.stringify({
+					id : this.state.user.id
+				})
+			})
+				.then(response => response.json())
+				.then(count => {
+					this.setState(Object.assign(this.state.user, {entries: count}))
+				})
+			}
 			this.displayFaceBox(this.calculateFaceLocation(response));
 		    const resultCelebrityName = response.outputs[0].data.regions[0].data.face.identity.concepts[0].name;
 		    this.setState({celebrityName : resultCelebrityName})
@@ -105,16 +138,16 @@ class App extends React.Component {
 		{ route === 'home' 
 		? <div>
 				<Navigation isSignedIn={isSignedIn} onRouteChange={this.onRouteChange}/>
-				<Rank />
-				<ImageLinkForm onInputChange={this.onInputChange} onSubmit={this.onSubmit}/>
+				<Rank name={this.state.user.name} entries={this.state.user.entries}/>
+				<ImageLinkForm onInputChange={this.onInputChange} onPictureSubmit={this.onPictureSubmit}/>
 				<FaceRecognition box={box} imageURL={imageURL} celebrityName={this.state.celebrityName} />
 			</div> 
 		: (
 			route === 'signIn'
 			? <div>	<Navigation isSignedIn={isSignedIn} onRouteChange={this.onRouteChange}/>
-				<SignIn onRouteChange={this.onRouteChange} /></div>
+				<SignIn loadUser={this.loadUser} onRouteChange={this.onRouteChange} /></div>
 			: <div><Navigation isSignedIn={isSignedIn} onRouteChange={this.onRouteChange}/>
-				<Register onRouteChange={this.onRouteChange} /></div>
+				<Register loadUser={this.loadUser} onRouteChange={this.onRouteChange} /></div>
 		)
 		
 		}
