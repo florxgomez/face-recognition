@@ -6,15 +6,15 @@ const Navigation = ({ onRouteChange, isSignedIn }) => {
 	return (
 			<nav className='pa3' style={{display:'flex', justifyContent:'space-between'}}>
 			<Logo />
-			<p onClick={() => onRouteChange('signout')} className='f3 link dim black pointer'>Sign Out</p>
+			<p onClick={() => onRouteChange('signout')} className='f3 link dim near-white pointer'>Sign Out</p>
 			</nav>
 	);
 	} else {
 		return (
 		<nav className='pa3' style={{display:'flex', justifyContent:'flex-end'}}>
 			
-			<p onClick={() => onRouteChange('signIn')} className='mr4 f3 link dim black pointer'>Sign In</p>
-			<p onClick={() => onRouteChange('register')} className='f3 link dim black pointer'>Register</p>
+			<p onClick={() => onRouteChange('signIn')} className='mr4 f3 link dim near-white pointer'>Sign In</p>
+			<p onClick={() => onRouteChange('register')} className='f3 link dim near-white pointer'>Register</p>
 		</nav>
 	
 	);

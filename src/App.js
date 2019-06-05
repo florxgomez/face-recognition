@@ -2,17 +2,29 @@ import React from 'react';
 import './App.css';
 import Navigation from './components/Navigation/Navigation';
 import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm';
-import Rank from './components/Rank/Rank';
 import FaceRecognition from './components/FaceRecognition/FaceRecognition';
 import SignIn from './components/SignIn/SignIn';
 import Register from './components/Register/Register';
 import tachyons from 'tachyons';
 import Particles from 'react-particles-js';
-import Clarifai from 'clarifai';
 
-const app = new Clarifai.App({
- apiKey: '9aeb04611e414652a67e4f9cdae1fbd2'
-});
+
+const initialState = {
+	input: '',
+		imageURL: '',
+		celebrityName: '',
+		box: {},
+		route: 'signIn',
+		isSignedIn: false,
+		user: {
+			id: '',
+			name: '',
+			email: '',
+			entries: 0,
+			joined: ''
+		}
+}
+
 
 class App extends React.Component {
 	constructor(){
@@ -55,7 +67,7 @@ class App extends React.Component {
 			leftCol: clarifaiFace.left_col * width,
 			topRow: clarifaiFace.top_row * height,
 			rightCol: width	- (clarifaiFace.right_col * width),
-			bottomRow: height - (clarifaiFace.bottom_row * height)
+			bottomRow: height - (clarifaiFace.bottom_row * height) + 100
 		}
 	}
 
@@ -69,11 +81,16 @@ class App extends React.Component {
 
 	onPictureSubmit = () => {
 		this.setState({imageURL: this.state.input})
-		app.models
-		.predict(
-			'e466caa0619f444ab97497640cefc4dc', 
-			this.state.input)
-		.then(response => { 
+		
+		fetch('http://localhost:3000/imageurl', {
+			method: 'post',
+			headers: {'Content-Type': 'application/json'},
+			body: JSON.stringify({
+			input : this.state.input
+			})
+		})
+		.then(response => response.json())
+		 .then(response => { 
 			if(response){
 				fetch('http://localhost:3000/image', {
 					method: 'put',
@@ -86,6 +103,7 @@ class App extends React.Component {
 				.then(count => {
 					this.setState(Object.assign(this.state.user, {entries: count}))
 				})
+				.catch(console.log)
 			}
 			this.displayFaceBox(this.calculateFaceLocation(response));
 		    const resultCelebrityName = response.outputs[0].data.regions[0].data.face.identity.concepts[0].name;
@@ -95,7 +113,8 @@ class App extends React.Component {
 
 	onRouteChange = (route) => {
 		if(route === 'signout') {
-			this.setState({isSignedIn: false})
+			this.setState(initialState)
+
 		} else if(route === 'home') {
 			this.setState({isSignedIn: true})
 		}
@@ -137,9 +156,8 @@ class App extends React.Component {
 			/>
 		{ route === 'home' 
 		? <div>
-				<Navigation isSignedIn={isSignedIn} onRouteChange={this.onRouteChange}/>
-				<Rank name={this.state.user.name} entries={this.state.user.entries}/>
-				<ImageLinkForm onInputChange={this.onInputChange} onPictureSubmit={this.onPictureSubmit}/>
+				<Navigation isSignedIn={isSignedIn} onRouteChange={this.onRouteChange}/>		
+				<ImageLinkForm onInputChange={this.onInputChange} onPictureSubmit={this.onPictureSubmit} name={this.state.user.name} entries={this.state.user.entries}/>
 				<FaceRecognition box={box} imageURL={imageURL} celebrityName={this.state.celebrityName} />
 			</div> 
 		: (
