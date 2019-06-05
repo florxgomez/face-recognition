@@ -3,7 +3,9 @@ body {
   font-family: 'Concert One';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: linear-gradient(to right, rgb(173, 153, 255), #282231);
+  background: linear-gradient(to top, rgb(173, 153, 255), #282231);
+  background-repeat: no-repeat;
+  background-attachment: fixed; 
 }
 
 button {
