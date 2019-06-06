@@ -89,11 +89,8 @@ class App extends React.Component {
 			input : this.state.input
 			})
 		})
-		.then(response => {
-			response.json();
-		console.log(response);
-		})
-
+		.then(response => response.json())
+		
 		 .then(response => { 
 			if(response){
 				fetch('https://ancient-sands-35408.herokuapp.com/image', {
