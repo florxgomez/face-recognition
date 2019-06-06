@@ -90,9 +90,9 @@ class App extends React.Component {
 			})
 		})
 		.then(response => {
-			response.json());
+			response.json();
 		console.log(response);
-		}
+		})
 
 		 .then(response => { 
 			if(response){
