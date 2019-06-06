@@ -1,2 +1,2 @@
-https://celeb-recognition.herokuapp.com/
+React Frontend for https://celeb-recognition.herokuapp.com/
 
