@@ -90,6 +90,7 @@ class App extends React.Component {
 			})
 		})
 		.then(response => response.json())
+		console.log(response)
 		 .then(response => { 
 			if(response){
 				fetch('https://ancient-sands-35408.herokuapp.com/image', {
