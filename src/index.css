@@ -1,14 +1,7 @@
 body {
-  margin: 0;
-  font-family: 'Concert One';
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background: linear-gradient(to top, rgb(173, 153, 255), #282231);
-  background-repeat: no-repeat;
-  background-attachment: fixed; 
+  font-family: "Roboto";
 }
 
 button {
-	cursor: pointer;
+  cursor: pointer;
 }
-
