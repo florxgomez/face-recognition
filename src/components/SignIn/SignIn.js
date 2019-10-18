@@ -1,81 +1,105 @@
-import React, { Component }from 'react';
-import '../Register/Register.css'
+import React, { Component, Fragment } from "react";
+import "../Register/Register.css";
+import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
+import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import withStyles from "@material-ui/core/styles/withStyles";
+import Icon from "../../../public/logo.jpg";
 
-class SignIn extends Component  {
-	constructor(props){
-		super(props);
-		this.state = {
-			signInEmail:'',
-			signInPassword: ''
-		}
-	}
+const styles = theme => ({
+  ...theme.spread
+});
 
-	onEmailChange = (event) => {
-		this.setState({signInEmail: event.target.value})
-	}
+class SignIn extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      signInEmail: "",
+      signInPassword: ""
+    };
+  }
 
-	onPasswordChange = (event) => {
-		this.setState({signInPassword: event.target.value})
-	}
+  onEmailChange = event => {
+    this.setState({ signInEmail: event.target.value });
+  };
 
-	onSubmitSignIn = () => {
-		fetch('https://ancient-sands-35408.herokuapp.com/signIn', {
-			method: 'post',
-			headers: {'Content-Type': 'application/json'},
-			body: JSON.stringify({
-				email: this.state.signInEmail,
-				password: this.state.signInPassword
-			})
-		})
-		 .then(response => response.json())
-		 .then(user =>{
-		 	if(user.id){
-		 		this.props.loadUser(user);
-		 		this.props.onRouteChange('home');
-		 	}
-		 })
-	}
-	
-	render(){
-		
-		const { onRouteChange } = this.props;
+  onPasswordChange = event => {
+    this.setState({ signInPassword: event.target.value });
+  };
 
-		return (
-		<article className="br3 ba dark-gray b--black-10 mv4 w-100 w-50-m w-25-l mw6 shadow-5 center register">
-			<main className="pa4 black-80">
-				<div className="measure">
-					<fieldset id="sign_up" className="ba b--transparent ph0 mh0">
-					<legend className="f2 fw6 ph0 mh0">Sign In</legend>
-					<div className="mt3">
-						<label className="db fw6 lh-copy f4" forhtml="email-address">Email</label>
-						<input 
-							onChange={this.onEmailChange}
-							className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" 
-							type="email" name="email-address" id="email-address" />
-					</div>
-					<div className="mv3">
-						<label className="db fw6 lh-copy f4" forhtml="password">Password</label>
-						<input 
-							onChange={this.onPasswordChange}
-							className="b pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" 
-							type="password" name="password" id="password" />
-					</div>
-					</fieldset>
-					<div>
-						<input 
-							onClick={this.onSubmitSignIn} 
-							className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f4 dib" 
-							type="submit" 
-							value="Sign in" />
-					</div>
-					<div className="lh-copy mt3">
-						<p onClick={() => onRouteChange('register')} className="f4 link dim black db pointer">Register</p>
-					</div>
-				</div>
-			</main>
-		</article>
-		);
-	}
+  onSubmitSignIn = () => {
+    fetch("https://ancient-sands-35408.herokuapp.com/signIn", {
+      method: "post",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email: this.state.signInEmail,
+        password: this.state.signInPassword
+      })
+    })
+      .then(response => response.json())
+      .then(user => {
+        if (user.id) {
+          this.props.loadUser(user);
+          this.props.onRouteChange("home");
+        }
+      });
+  };
+
+  render() {
+    const { onRouteChange, classes } = this.props;
+
+    return (
+      <Grid container spacing={2} className={classes.form}>
+        <Grid item sm />
+        <Grid item sm>
+          <img src={Icon} alt="icon" className={classes.image} />
+          <Typography variant="h2" className={classes.title}>
+            Sign In
+          </Typography>
+          <form noValidate>
+            <TextField
+              id="email"
+              name="email"
+              type="email"
+              label="Email"
+              className={classes.textField}
+              value={this.state.email}
+              onChange={this.onEmailChange}
+              fullWidth
+            />
+            <TextField
+              id="password"
+              name="password"
+              type="password"
+              label="Password"
+              className={classes.textField}
+              value={this.state.password}
+              onChange={this.onPasswordChange}
+              fullWidth
+            />
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              className={classes.button}
+              disabled={false}
+              onClick={this.onSubmitSignIn}
+            >
+              Submit
+            </Button>
+            <br />
+            <br />
+            <small>
+              Don't have an account? sign up
+              <a onClick={() => onRouteChange("register")}> here</a>
+            </small>
+          </form>
+        </Grid>
+      </Grid>
+    );
+  }
 }
 
-export default SignIn;
+export default withStyles(styles)(SignIn);
