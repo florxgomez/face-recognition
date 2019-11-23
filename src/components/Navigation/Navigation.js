@@ -10,7 +10,6 @@ const Navigation = ({ onRouteChange, isSignedIn }) => {
         <Toolbar className="nav-container">
           <p
             onClick={() => onRouteChange("signout")}
-            className="f3 link dim near-white pointer"
           >
             Sign Out
           </p>
@@ -23,20 +22,10 @@ const Navigation = ({ onRouteChange, isSignedIn }) => {
         <Toolbar className="nav-container">
           <Fragment>
             <Button color="inherit">
-              <p
-                onClick={() => onRouteChange("signIn")}
-                className="mr4 f3 link dim near-white pointer"
-              >
-                Login
-              </p>
+              <p onClick={() => onRouteChange("signIn")}>Login</p>
             </Button>
             <Button color="inherit">
-              <p
-                onClick={() => onRouteChange("register")}
-                className="f3 link dim near-white pointer"
-              >
-                Sign Up
-              </p>
+              <p onClick={() => onRouteChange("register")}>Sign Up</p>
             </Button>
           </Fragment>
         </Toolbar>

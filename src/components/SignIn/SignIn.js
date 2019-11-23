@@ -1,12 +1,13 @@
-import React, { Component, Fragment } from "react";
-import "../Register/Register.css";
+import React, { Component } from "react";
+
+
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import withStyles from "@material-ui/core/styles/withStyles";
-import Icon from "../../../public/logo.jpg";
+import Icon from "../../images/logo.jpg";
 
 const styles = theme => ({
   ...theme.spread
@@ -51,7 +52,7 @@ class SignIn extends Component {
     const { onRouteChange, classes } = this.props;
 
     return (
-      <Grid container spacing={2} className={classes.form}>
+      <Grid container className={classes.form}>
         <Grid item sm />
         <Grid item sm>
           <img src={Icon} alt="icon" className={classes.image} />
@@ -92,11 +93,13 @@ class SignIn extends Component {
             <br />
             <br />
             <small>
-              Don't have an account? sign up
-              <a onClick={() => onRouteChange("register")}> here</a>
+              <Typography variant="body2">Don't have an account? sign up
+              <button onClick={() => onRouteChange("register")}
+              style={{border: 0}}> <Typography variant="button" align="left">here</Typography></button></Typography>
             </small>
           </form>
         </Grid>
+        <Grid item sm />
       </Grid>
     );
   }

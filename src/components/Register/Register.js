@@ -1,5 +1,14 @@
 import React, { Component } from 'react';
-import './Register.css'
+import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
+import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
+import Icon from "../../images/logo.jpg";
+import withStyles from "@material-ui/core/styles/withStyles";
+
+const styles = theme => ({
+  ...theme.spread
+});
 
 class Register extends Component {
 constructor(props){
@@ -43,46 +52,62 @@ constructor(props){
 	}
 
 	render(){
+		const { classes } = this.props;
 		return(
-		<article className="br3 ba b--black-10 mv4 w-100 w-50-m w-25-l mw6 shadow-5 center register">
-			<main className="pa4 black-80">
-				<div className="measure">
-					<fieldset id="sign_up" className="ba b--transparent ph0 mh0">
-					<legend className="f2 fw6 ph0 mh0">Register</legend>
-					<div className="mt3">
-						<label className="db fw6 lh-copy f4 " forhtml="name">Name</label>
-						<input 
-						 className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" 
-						 onChange={this.onNameChange}
-						 type="text" name="name"  id="name" />
-					</div>
-					<div className="mt3">
-						<label className="db fw6 lh-copy f4" forhtml="email-address">Email</label>
-						<input 
-						 onChange={this.onEmailChange}
-						 className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" 
-						 type="email" name="email-address"  id="email-address" />
-					</div>
-					<div className="mv3">
-						<label className="db fw6 lh-copy f4" forhtml="password">Password</label>
-						<input 
-						 onChange={this.onPasswordChange}
-						 className="b pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" 
-						 type="password" name="password"  id="password" />
-					</div>
-					</fieldset>
-					<div className="">
-						<input 
-							onClick={this.onSubmitRegister} 
-							className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f4 dib" 
-							type="submit" 
-							value="I'm in!" />
-					</div>
-				</div>
-			</main>
-		</article>
+			<Grid container className={classes.form}>
+			<Grid item sm />
+        <Grid item sm >
+          <img src={Icon} alt="icon" className={classes.image} />
+          <Typography variant="h2" className={classes.title}>
+            Sign Up
+					</Typography>
+					<form noValidate>
+            <TextField
+              id="name"
+              name="name"
+              type="text"
+              label="Name"
+              className={classes.textField}
+              value={this.state.name}
+              onChange={this.onNameChange}
+              fullWidth
+						/>
+						<TextField
+              id="email"
+              name="email"
+              type="email"
+              label="Email"
+              className={classes.textField}
+              value={this.state.email}
+              onChange={this.onEmailChange}
+              fullWidth
+						/>
+						<TextField
+              id="password"
+              name="password"
+              type="password"
+              label="Password"
+              className={classes.textField}
+              value={this.state.password}
+              onChange={this.onPasswordChange}
+              fullWidth
+						/>
+						<Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              className={classes.button}
+              disabled={false}
+              onClick={this.onSubmitRegister}
+            >
+              Submit
+						</Button>
+						</form>
+						</Grid>
+			</Grid>
+
 		);
 	}
 }
 
-export default Register;
+export default withStyles(styles)(Register);
