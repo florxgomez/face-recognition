@@ -1,22 +1,58 @@
 import React from 'react';
 import './ImageLinkForm.css';
 import Rank from '../Rank/Rank';
+import withStyles from '@material-ui/core/styles/withStyles';
+import { Typography } from '@material-ui/core';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import Paper from '@material-ui/core/Paper';
 
-const ImageLinkForm = ({onInputChange, onPictureSubmit, entries, name}) => {
-	return (
-		<div>
-		<p className="f1 main-title">
-		{'What celebrity do you look like?'}
-		</p>
-		<Rank name={name} entries={entries}/>
-		<div className='center'>
-		<div className='form center pa4 br3 shadow-5'>
-		<input className='f4 pa2 w-70 center' type='text' onChange={onInputChange}/>
-		<button className='w-30 grow f4 link ph3 pv2 dib white bg-light-purple' onClick={onPictureSubmit}>Detect</button>
-		</div>
-		</div>
-		</div>
-		);
-}
+const styles = theme => ({
+  ...theme.spread
+});
 
-export default ImageLinkForm;
+const ImageLinkForm = ({
+  onInputChange,
+  onPictureSubmit,
+  entries,
+  name,
+  classes
+}) => {
+  return (
+    <div className={classes.form}>
+      <Typography
+        variant="h2"
+        align="center"
+        color="primary"
+        className={classes.pageTitle}
+      >
+        {'What celebrity do you look like?'}
+      </Typography>
+      <Rank name={name} entries={entries} />
+      <form noValidate>
+        <TextField
+          id="url"
+          name="url"
+          type="text"
+          label="Image URL"
+          className={classes.inputURL}
+          onChange={onInputChange}
+          fullWidth
+        />
+        <br />
+        <Button
+          type="submit"
+          variant="contained"
+          color="primary"
+          className={classes.button}
+          disabled={false}
+          onClick={onPictureSubmit}
+        >
+          Submit
+        </Button>
+      </form>
+    </div>
+  );
+};
+
+export default withStyles(styles)(ImageLinkForm);

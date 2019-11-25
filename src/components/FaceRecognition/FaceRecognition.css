@@ -1,6 +1,6 @@
 .bounding-box {
 	position: absolute;
-	box-shadow: inset 0 0 0 3px #A463F2;
+	box-shadow: inset 0 0 0 3px #29a19c;
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: center;
@@ -9,5 +9,9 @@
 
 .capitalize {
 	text-transform: capitalize;
+}
+
+.celebrity-name {
+	margin: 25px;
 }
  

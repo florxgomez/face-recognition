@@ -5,7 +5,6 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
-import CircularProgress from "@material-ui/core/CircularProgress";
 import withStyles from "@material-ui/core/styles/withStyles";
 import Icon from "../../images/logo.jpg";
 
@@ -30,7 +29,9 @@ class SignIn extends Component {
     this.setState({ signInPassword: event.target.value });
   };
 
-  onSubmitSignIn = () => {
+  onSubmitSignIn = (e) => {
+    e.preventDefault();
+    console.log('signing in');
     fetch("https://ancient-sands-35408.herokuapp.com/signIn", {
       method: "post",
       headers: { "Content-Type": "application/json" },
@@ -52,6 +53,7 @@ class SignIn extends Component {
     const { onRouteChange, classes } = this.props;
 
     return (
+      
       <Grid container className={classes.form}>
         <Grid item sm />
         <Grid item sm>
@@ -101,6 +103,7 @@ class SignIn extends Component {
         </Grid>
         <Grid item sm />
       </Grid>
+
     );
   }
 }

@@ -2,13 +2,13 @@ export default {
   palette: {
     primary: {
       light: "#c483de",
-      main: "#b665d6",
-      dark: "#7f4695",
+      main: "#393e46",
+      dark: "#29a19c",
       contrastText: "#fff"
     },
     secondary: {
       light: "#83deda",
-      main: "#65d6d1",
+      main: "#29a19c",
       dark: "#469592",
       contrastText: "#fff"
     }
@@ -22,14 +22,16 @@ export default {
       backgroundColor: "white"
     },
     image: {
-      margin: "150px auto 20px auto",
+      margin: "100px auto 20px auto",
       width: 150
     },
     pageTitle: {
-      margin: "10px auto 10px auto"
+      margin: "100px auto 10px auto",
+      
     },
     textField: {
-      margin: "20px auto 10px auto"
+      margin: "20px auto 10px auto",
+      width: '100%'
     },
     button: {
       marginTop: 20,
@@ -54,49 +56,20 @@ export default {
       marginBottom: 10
     },
     paper: {
-      padding: 20
-    },
-    profile: {
-      "& .image-wrapper": {
-        textAlign: "center",
-        position: "relative",
-        "& button": {
-          position: "absolute",
-          top: "80%",
-          left: "70%"
-        }
-      },
-      "& .profile-image": {
-        width: 200,
-        height: 200,
-        objectFit: "cover",
-        maxWidth: "100%",
-        borderRadius: "50%"
-      },
-      "& .profile-details": {
-        textAlign: "center",
-        "& span, svg": {
-          verticalAlign: "middle"
-        },
-        "& a": {
-          color: "#c483de"
-        }
-      },
-      "& hr": {
-        border: "none",
-        margin: "0 0 10px 0"
-      },
-      "& svg.button": {
-        "&:hover": {
-          cursor: "pointer"
-        }
-      }
+      padding: 20,
+      margin: '0 auto',
+      width: '80%'
     },
     buttons: {
       textAlign: "center",
       "& a": {
         margin: "20px 10px"
       }
+    },
+    inputURL: {
+      marginTop: '5%',
+      width: '80%',
+      marginBottom: '5%'
     }
   }
 };

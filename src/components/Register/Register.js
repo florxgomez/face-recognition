@@ -32,7 +32,8 @@ constructor(props){
 		this.setState({password: event.target.value})
 	}
 
-	onSubmitRegister = () => {
+	onSubmitRegister = (e) => {
+		e.preventDefault();
 		fetch('https://ancient-sands-35408.herokuapp.com/register', {
 			method: 'post',
 			headers: {'Content-Type': 'application/json'},
@@ -104,6 +105,7 @@ constructor(props){
 						</Button>
 						</form>
 						</Grid>
+						<Grid item sm />
 			</Grid>
 
 		);
